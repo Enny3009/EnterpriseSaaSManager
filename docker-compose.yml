@@ -1,0 +1,43 @@
+services:
+  # 1. Database
+  saas-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: saas-db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrong!Passw0rd
+    ports:
+      - "1435:1433"  # <<< CHANGE THE LEFT NUMBER ONLY
+    volumes:
+      - sqlvolume:/var/opt/mssql
+
+  # 2. Backend API
+  saas-api:
+    build: 
+      context: .
+      dockerfile: API/Dockerfile
+    container_name: saas-api
+    ports:
+      - "5169:8080"
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=saas-db;Database=SaaSManagerDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
+      - JwtSettings__Key=ThisIsASecretKeyForDevOnly!1234567890
+      - JwtSettings__Issuer=SaaSManager
+      - JwtSettings__Audience=SaaSManagerUser
+      - JwtSettings__DurationInMinutes=60
+    depends_on:
+      - saas-db
+
+  # 3. Frontend Client
+  saas-client:
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: saas-client
+    ports:
+      - "5173:80"
+    depends_on:
+      - saas-api
+
+volumes:
+  sqlvolume:
