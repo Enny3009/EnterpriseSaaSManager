@@ -51,6 +51,9 @@ export default function Dashboard() {
           <a href="#" className="flex items-center px-4 py-3 bg-brand-800 text-white rounded-lg transition-colors">
             <span className="font-medium">Dashboard</span>
           </a>
+          <a href="/pricing" className="flex items-center px-4 py-3 text-brand-100 hover:bg-brand-800 rounded-lg transition-colors">
+            <span className="font-medium">Upgrade Plan</span>
+          </a>
           <a href="#" className="flex items-center px-4 py-3 text-brand-100 hover:bg-brand-800 rounded-lg transition-colors">
             <span className="font-medium">Tenants</span>
           </a>

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import api from './lib/api';
 import Dashboard from './Dashboard';
+import Pricing from './Pricing';
 
 // Login Component (Internal)
 function Login() {
@@ -50,6 +51,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/pricing" element={<Pricing />} /> {/* <<< NEW */}
       </Routes>
     </BrowserRouter>
   );
